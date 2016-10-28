@@ -28,7 +28,7 @@ Then, from a client you can discover an inbox
 curl -I -X GET http://pyldn.amp.ops.labs.vu.nl/
 
 HTTP/1.1 200 OK
-Link: <http://pyldn.amp.ops.labs.vu.nl:8088/inbox/>;
+Link: &lt;http://pyldn.amp.ops.labs.vu.nl:8088/inbox/&gt;;
 </pre>
 
 You can request a list of the notification URLs it contains:
@@ -38,18 +38,18 @@ curl -X GET -H'Accept: text/turtle' http://pyldn.amp.ops.labs.vu.nl/inbox/
 
 HTTP/1.1 200 OK
 
-@prefix ldp: <http://www.w3.org/ns/ldp#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ldp: &lt;http://www.w3.org/ns/ldp#&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix xml: &lt;http://www.w3.org/XML/1998/namespace&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
-<http://pyldn.amp.ops.labs.vu.nl:8088/inbox/> a ldp:BasicContainer,
+&lt;http://pyldn.amp.ops.labs.vu.nl:8088/inbox/&gt; a ldp:BasicContainer,
         ldp:Container,
         ldp:RDFSource,
         ldp:Resource ;
-    ldp:contains <http://pyldn.amp.ops.labs.vu.nl:8088/inbox/1>,
-        <http://pyldn.amp.ops.labs.vu.nl:8088/inbox/2> .
+    ldp:contains &lt;http://pyldn.amp.ops.labs.vu.nl:8088/inbox/1&gt;,
+        &lt;http://pyldn.amp.ops.labs.vu.nl:8088/inbox/2&gt; .
 </pre>
 
 You can even post new notifications to this inbox! You'll get the URL for your notification in the response headers:
@@ -68,11 +68,11 @@ curl -i -X GET -H'Accept: text/turtle' http://pyldn.amp.ops.labs.vu.nl/inbox/3
 
 HTTP/1.1 200 OK
 
-@prefix ns1: <file:///home/amp/src/pyldn/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns1: &lt;file:///home/amp/src/pyldn/&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix xml: &lt;http://www.w3.org/XML/1998/namespace&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
 ns1:foo ns1:bar ns1:foobar .
 </pre>
