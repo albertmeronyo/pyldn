@@ -18,17 +18,18 @@ class Pyldnconfig(object):
 
         self._base_path = config.get('ldn', 'basePath')
         self._inbox_path = config.get('ldn', 'inboxPath')
-        self._port = int(config.get('ldn', 'port'))
+        # self._port = int(config.get('ldn', 'port'))
 
         if not self._base_path:
             self._base_path = 'http://localhost'
         if not self._inbox_path:
             self._inbox_path = '/inbox/'
-        if not self._port:
-            self._port = 80
+        # if not self._port:
+        #     self._port = 80
 
-        port_str = ":" + str(self._port) if self._port != 80 else ""
-        self._inbox_url = self._base_path + port_str + self._inbox_path
+        # port_str = ":" + str(self._port) if self._port != 80 else ""
+        # self._inbox_url = self._base_path + port_str + self._inbox_path
+        self._inbox_url = self._base_path + self._inbox_path
 
         self._ldn_counter = 1
 

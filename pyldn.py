@@ -125,4 +125,4 @@ def get_notification(id):
     return resp
 
 if __name__ == '__main__':
-    app.run(port=pyldnconf._port, debug=True)
+    app.run(8088, debug=True)
