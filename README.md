@@ -55,7 +55,7 @@ HTTP/1.1 200 OK
 You can even post new notifications to this inbox! You'll get the URL for your notification in the response headers:
 
 <pre>
-curl -i -X POST -d '<foo> <bar> <foobar> .' -H'Content-Type: text/turtle' http://pyldn.amp.ops.labs.vu.nl/inbox/
+curl -i -X POST -d '&lt;foo&gt; &lt;bar&gt; &lt;foobar&gt; .' -H'Content-Type: text/turtle' http://pyldn.amp.ops.labs.vu.nl/inbox/
 
 HTTP/1.1 201 CREATED
 Location: http://pyldn.amp.ops.labs.vu.nl:8088/inbox/3
