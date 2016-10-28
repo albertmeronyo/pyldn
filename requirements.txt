@@ -1,0 +1,17 @@
+click==6.6
+Flask==0.11.1
+html5lib==0.999999999
+isodate==0.5.4
+itsdangerous==0.24
+Jinja2==2.8
+keepalive==0.5
+MarkupSafe==0.23
+pyparsing==2.1.10
+rdflib==4.2.1
+rdflib-jsonld==0.4.0
+requests==2.11.1
+six==1.10.0
+SPARQLWrapper==1.7.6
+webencodings==0.5
+Werkzeug==0.11.11
+wheel==0.24.0
