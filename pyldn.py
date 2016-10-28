@@ -26,7 +26,7 @@ pyldnlog.info(pyldnconf.log_config())
 # Accepted content types
 ACCEPTED_TYPES = ['application/ld+json',
                   'text/turtle',
-                  'application/ld+json; profile="http://www.w3.org/ns/activitystreams']
+                  'application/ld+json; profile="http://www.w3.org/ns/activitystreams', 'turtle', 'json-ld']
 
 # Graph of the local inbox
 ldp_url = URIRef("http://www.w3.org/ns/ldp#")
