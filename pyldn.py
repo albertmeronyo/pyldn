@@ -65,10 +65,12 @@ def head_inbox():
 @app.route(pyldnconf._inbox_path, methods=['GET'])
 def get_inbox():
     pyldnlog.debug("Requested inbox data of {} in {}".format(request.url, request.headers['Accept']))
-    if not request.headers['Accept'] or request.headers['Accept'] == '*/*':
+    if not request.headers['Accept'] or request.headers['Accept'] == '*/*' or 'text/html' in request.headers['Accept']:
         resp = make_response(inbox_graph.serialize(format='application/ld+json'))
+        resp.headers['Content-Type'] = 'application/ld+json'
     elif request.headers['Accept'] in ACCEPTED_TYPES:
         resp = make_response(inbox_graph.serialize(format=request.headers['Accept']))
+        resp.headers['Content-Type'] = request.headers['Accept']
     else:
         return 'Requested format unavailable', 415
 
@@ -112,10 +114,12 @@ def get_notification(id):
     if pyldnconf._inbox_url + id not in graphs:
         return 'Requested notification does not exist', 404
 
-    if not request.headers['Accept'] or request.headers['Accept'] == '*/*':
+    if not request.headers['Accept'] or request.headers['Accept'] == '*/*' or 'text/html' in request.headers['Accept']:
         resp = make_response(graphs[pyldnconf._inbox_url + id].serialize(format='application/ld+json'))
+        resp.headers['Content-Type'] = 'application/ld+json'
     elif request.headers['Accept'] in ACCEPTED_TYPES:
         resp = make_response(graphs[pyldnconf._inbox_url + id].serialize(format=request.headers['Accept']))
+        resp.headers['Content-Ty[e'] = request.headers['Accept']
     else:
         return 'Requested format unavailable', 415
 
