@@ -52,7 +52,7 @@ def pyldn():
 
     return resp
 
-@app.route(pyldnconf._inbox_path, methods=['HEAD'])
+@app.route(pyldnconf._inbox_path, methods=['HEAD', 'OPTIONS'])
 def head_inbox():
     resp = make_response()
     resp.headers['X-Powered-By'] = 'https://github.com/albertmeronyo/pyldn'
@@ -83,8 +83,12 @@ def get_inbox():
 
 @app.route(pyldnconf._inbox_path, methods=['POST'])
 def post_inbox():
+    pyldnlog.debug("Received request to create notification")
+    pyldnlog.debug("Headers: {}".format(request.headers))
     # Check if there's acceptable content
-    if request.headers['Content-Type'] not in ACCEPTED_TYPES:
+    content_type = [s for s in ACCEPTED_TYPES if s in request.headers['Content-Type']]
+    pyldnlog.debug("Interpreting content type as {}".format(content_type))
+    if not content_type:
         return 'Content type not accepted', 500
     if not request.data:
         return 'Received empty payload', 500
@@ -94,9 +98,9 @@ def post_inbox():
     ldn_url = pyldnconf._inbox_url + str(pyldnconf._ldn_counter)
     graphs[ldn_url] = g = Graph()
     try:
-        g.parse(data=request.data, format=request.headers['Content-Type'])
+        g.parse(data=request.data, format=content_type[0])
     except: # Should not catch everything
-        return 'Could not parse received {} payload'.format(request.headers['Content-Type']), 500
+        return 'Could not parse received {} payload'.format(content_type[0]), 500
 
     pyldnlog.debug('Created notification {}'.format(ldn_url))
     inbox_graph.add((URIRef(pyldnconf._inbox_url), ldp['contains'], URIRef(ldn_url)))
@@ -107,19 +111,20 @@ def post_inbox():
 
 @app.route(pyldnconf._inbox_path + '<id>', methods=['GET'])
 def get_notification(id):
-    pyldnlog.debug("Requested notification data of {} in {}".format(request.url, request.headers['Accept']))
+    pyldnlog.debug("Requested notification data of {}".format(request.url))
+    pyldnlog.debug("Headers: {}".format(request.headers))
 
     # Check if the named graph exists
     pyldnlog.debug("Dict key is {}".format(pyldnconf._inbox_url + id))
     if pyldnconf._inbox_url + id not in graphs:
         return 'Requested notification does not exist', 404
 
-    if not request.headers['Accept'] or request.headers['Accept'] == '*/*' or 'text/html' in request.headers['Accept']:
+    if 'Accept' not in request.headers or request.headers['Accept'] == '*/*' or 'text/html' in request.headers['Accept']:
         resp = make_response(graphs[pyldnconf._inbox_url + id].serialize(format='application/ld+json'))
         resp.headers['Content-Type'] = 'application/ld+json'
     elif request.headers['Accept'] in ACCEPTED_TYPES:
         resp = make_response(graphs[pyldnconf._inbox_url + id].serialize(format=request.headers['Accept']))
-        resp.headers['Content-Ty[e'] = request.headers['Accept']
+        resp.headers['Content-Type'] = request.headers['Accept']
     else:
         return 'Requested format unavailable', 415
 
