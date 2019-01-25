@@ -2,7 +2,7 @@
 
 # config.py: An object to manage pyldn's config
 
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 import logging
 
 clog = logging.getLogger(__name__)
